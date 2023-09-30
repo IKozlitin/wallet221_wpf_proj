@@ -19,15 +19,15 @@
         </Grid.RowDefinitions>
 
         <StackPanel Background="#FF340063" Grid.Row="0">
-            <TextBlock FontSize="15" FontWeight="Bold" Text="{Binding ClientFName}"/>
+            <TextBlock FontSize="15" Foreground="White" FontWeight="Bold" Text="{Binding FirstName}"/>      
         </StackPanel>
 
         <StackPanel Grid.Row="1">
             <Expander Header="Карты" IsExpanded="True">
                 <StackPanel>
                     <ListBox Background="BlueViolet" Name="cardList">
-                        <TextBlock FontSize="14" Text="{Binding CardName}"/>
-                        <TextBlock FontSize="12" Text="{Binding CardBalance}"/>
+                        <TextBlock FontSize="12" Foreground="White" Text="{Binding CardName}"/>
+                        <TextBlock FontSize="14" Foreground="White" Text="{Binding CardBalance}"/>
                         <StackPanel Orientation="Horizontal">
                             <Button Background="#FF4EFF00" Name="addCardBtn" Content="Добавить" FontSize="10" Margin="5,5,10,5"/>
                             <Button Background="#FF4EFF00" Name="topUpCardBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5"/>
@@ -42,8 +42,9 @@
             <Expander Header="Вклады" IsExpanded="True">
                 <StackPanel>
                     <ListBox Background="BlueViolet" Name="depositList">
-                        <TextBlock FontSize="14" Text="{Binding DepositName}"/>
-                        <TextBlock FontSize="12" Text="{Binding DepositBalance}"/>
+                        <TextBlock FontSize="12" Foreground="White" Text="{Binding DepositName}"/>
+                        <TextBlock FontSize="14" Foreground="White" Text="{Binding DepositBalance}"/>
+                        <TextBlock FontSize="12" Foreground="White" Text="{Binding DepositPercent}"/>
                         <StackPanel Orientation="Horizontal">
                             <Button Background="#FF4EFF00" Name="openDepositBtn" Content="Открыть" FontSize="10" Margin="5,5,10,5"/>
                             <Button Background="#FF4EFF00" Name="addDepositBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5"/>

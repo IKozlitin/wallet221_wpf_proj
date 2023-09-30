@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,20 @@ namespace wallet221_wpf_proj
     /// </summary>
     public partial class MainWindow : Window
     {
+        WalletDbContext db = new WalletDbContext();
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;                   
         }
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {            
+            db.Clients.Load();
+            DataContext = db.Clients.Local.ToObservableCollection();
+            db.RublesCards.Load();
+            DataContext = db.RublesCards.Local.ToObservableCollection();
+            db.RublesDeposits.Load();
+            DataContext = db.RublesDeposits.Local.ToObservableCollection();
+        }       
     }
 }
