@@ -25,16 +25,16 @@ namespace wallet221_wpf_proj
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += MainWindow_Loaded;                   
+            Loaded += MainWindow_Loaded;
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {            
-            db.Clients.Load();
-            DataContext = db.Clients.Local.ToObservableCollection();
+        {
+            db.Clients.Load();            
+            client.DataContext=db.Clients.Local.ToObservableCollection();
             db.RublesCards.Load();
-            DataContext = db.RublesCards.Local.ToObservableCollection();
+            cardList.DataContext = db.RublesCards.Local.ToObservableCollection();
             db.RublesDeposits.Load();
-            DataContext = db.RublesDeposits.Local.ToObservableCollection();
-        }       
+            depositList.DataContext = db.RublesDeposits.Local.ToObservableCollection();
+        }
     }
 }

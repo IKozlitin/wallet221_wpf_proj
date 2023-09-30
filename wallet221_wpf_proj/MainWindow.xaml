@@ -18,8 +18,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Background="#FF340063" Grid.Row="0">
-            <TextBlock FontSize="15" Foreground="White" FontWeight="Bold" Text="{Binding FirstName}"/>      
+        <StackPanel Name="client" Background="#FF340063" Grid.Row="0">
+            <TextBlock FontSize="15" Foreground="White" FontWeight="Bold" Text="{Binding FirstName}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
