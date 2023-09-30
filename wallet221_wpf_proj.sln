@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wallet221_wpf_proj", "wallet221_wpf_proj\wallet221_wpf_proj.csproj", "{BF4D75A3-D295-4DD5-BD9E-32BE96D20779}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF4D75A3-D295-4DD5-BD9E-32BE96D20779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF4D75A3-D295-4DD5-BD9E-32BE96D20779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF4D75A3-D295-4DD5-BD9E-32BE96D20779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF4D75A3-D295-4DD5-BD9E-32BE96D20779}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6C36BE08-8A70-415E-AE2B-21F3A5B4C2CE}
+	EndGlobalSection
+EndGlobal
