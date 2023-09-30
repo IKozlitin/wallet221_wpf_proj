@@ -35,6 +35,8 @@ namespace wallet221_wpf_proj
             cardList.DataContext = db.RublesCards.Local.ToObservableCollection();
             db.RublesDeposits.Load();
             depositList.DataContext = db.RublesDeposits.Local.ToObservableCollection();
+            db.ExchangeRateLists.Load();
+            exchangeRateList.DataContext = db.ExchangeRateLists.Local.ToObservableCollection();
         }
     }
 }

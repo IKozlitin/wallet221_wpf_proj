@@ -19,13 +19,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel Name="client" Background="#FF340063" Grid.Row="0">
+            <TextBlock FontSize="15" Foreground="White" FontWeight="Bold" Text="{Binding SurName}"/>
             <TextBlock FontSize="15" Foreground="White" FontWeight="Bold" Text="{Binding FirstName}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
             <Expander Header="Карты" IsExpanded="True">
                 <StackPanel>
-                    <ListBox Background="BlueViolet" Name="cardList">
+                    <ListBox Background="BlueViolet" x:Name="cardList">
                         <TextBlock FontSize="12" Foreground="White" Text="{Binding CardName}"/>
                         <TextBlock FontSize="14" Foreground="White" Text="{Binding CardBalance}"/>
                         <StackPanel Orientation="Horizontal">
@@ -58,11 +59,15 @@
         <StackPanel Grid.Row="3">
             <Expander Header="Курс валют" IsExpanded="True">
                 <StackPanel>
-                    <ListBox Background="BlueViolet" Name="exchangeRateList">
-                        <TextBlock FontSize="10" Text="{Binding RubExRate}"/>
-                        <TextBlock FontSize="10" Text="{Binding UsdExRate}"/>
-                        <TextBlock FontSize="10" Text="{Binding EurExRate}"/>
-                        <TextBlock FontSize="10" Text="{Binding CnyExRate}"/>
+                    <ListBox Background="BlueViolet" x:Name="exchangeRateList" ItemsSource="{Binding}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0,0,20,0" Foreground="White" FontSize="11" Text="{Binding CurrencyName}"/>
+                                    <TextBlock Margin="0,0,20,0" Foreground="White" FontSize="11" Text="{Binding CurrencyRate}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
             </Expander>

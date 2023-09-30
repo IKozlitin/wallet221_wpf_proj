@@ -17,6 +17,8 @@ public partial class WalletDbContext : DbContext
 
     public virtual DbSet<Client> Clients { get; set; }
 
+    public virtual DbSet<ExchangeRateList> ExchangeRateLists { get; set; }
+
     public virtual DbSet<RublesCard> RublesCards { get; set; }
 
     public virtual DbSet<RublesDeposit> RublesDeposits { get; set; }
@@ -34,6 +36,15 @@ public partial class WalletDbContext : DbContext
 
             entity.Property(e => e.FirstName).HasMaxLength(100);
             entity.Property(e => e.SurName).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<ExchangeRateList>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Exchange__3214EC0707432E46");
+
+            entity.ToTable("ExchangeRateList");
+
+            entity.Property(e => e.CurrencyName).HasMaxLength(25);
         });
 
         modelBuilder.Entity<RublesCard>(entity =>
