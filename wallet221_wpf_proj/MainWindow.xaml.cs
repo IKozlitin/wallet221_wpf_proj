@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes; 
+using System.Windows.Shapes;
 
 namespace wallet221_wpf_proj
 {
@@ -64,36 +64,22 @@ namespace wallet221_wpf_proj
         }
 
         private void topUpCardBtn_Click(object sender, RoutedEventArgs e)
-        {
+        {          
+            WindowTopUp topup = new WindowTopUp();
+            topup.ShowDialog();
+
             RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
             if (rublesCard is null) return;
-            rublesCard.CardBalance = Convert.ToDecimal(value3.Text);
+            rublesCard.CardBalance += Convert.ToDecimal(topup.topupTextBox.Text);
 
             rublesCard = db.RublesCards.Find(rublesCard.Id);
             db.SaveChanges();
             cardList.Items.Refresh();
-
-            //WindowTopUp topup = new WindowTopUp();
-            //topup.ShowDialog();
-            //if (topup.ShowDialog() == true)
-            //{
-            //    RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
-            //    if (rublesCard is null) return;
-            //    rublesCard.CardBalance += Convert.ToDecimal(topup.topupTextBox.Text);
-
-            //    rublesCard = db.RublesCards.Find(rublesCard.Id);
-            //    db.SaveChanges();
-            //    cardList.Items.Refresh();
-            //}
         }
         private void cardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //RublesCard rublesCard = (RublesCard)sender;
             RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
             if (rublesCard is null) return;
-            value1.Text = rublesCard.ClientId.ToString();
-            value2.Text = rublesCard.CardName;
-            value3.Text = rublesCard.CardBalance.ToString();
         }
     }
 }

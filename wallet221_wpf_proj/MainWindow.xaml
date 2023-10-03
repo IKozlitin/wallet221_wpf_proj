@@ -96,10 +96,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-            <TextBox x:Name="value1"/>
-            <TextBox x:Name="value2"/>
-            <TextBox x:Name="value3"/>
         </StackPanel>            
     </Grid>
 </Window>
