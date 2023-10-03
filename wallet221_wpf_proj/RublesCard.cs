@@ -12,4 +12,6 @@ public partial class RublesCard
     public string CardName { get; set; } = null!;
 
     public decimal CardBalance { get; set; }
+
+    public virtual Client? Client { get; set; }
 }

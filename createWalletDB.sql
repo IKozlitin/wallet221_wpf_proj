@@ -33,22 +33,23 @@ create table RublesDeposit
 go
 insert into RublesDeposit values (1, 'Рубли', 2000, 8.5)
 go
-create table ExchangeRateList
+create table RateList
 (
 	Id int identity (1,1) primary key,
 	CurrencyName nvarchar(25) not null,
 	CurrencyRate float not null
 )
 go
-insert into ExchangeRateList values ('USD', 100)
-insert into ExchangeRateList values ('EUR', 105)
-insert into ExchangeRateList values ('CNY', 15)
+insert into RateList values ('USD', 100)
+insert into RateList values ('EUR', 105)
+insert into RateList values ('CNY', 15)
 go
---create table History
---(
---	Id int identity (1,1) primary key,
---	ClientId int,
---	Operation nvarchar(max),
---	CreateAt datetime not null default getdate
---)
---go
+create table History
+(
+	Id int identity (1,1) primary key,
+	ClientId int,
+	Operation nvarchar(max),
+	CreateAt datetime not null default getdate()
+)
+go
+

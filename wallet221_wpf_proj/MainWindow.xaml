@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:wallet221_wpf_proj"
         mc:Ignorable="d"
         Title="Wallet221" Height="480" Width="300">
-    <Grid Background="DimGray">
+    <Grid Background="DimGray">        
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -26,40 +26,52 @@
         <StackPanel Grid.Row="1">
             <Expander Header="Карты" IsExpanded="True">
                 <StackPanel>
-                    <ListBox Background="BlueViolet" x:Name="cardList">
-                        <TextBlock FontSize="12" Foreground="White" Text="{Binding CardName}"/>
-                        <TextBlock FontSize="14" Foreground="White" Text="{Binding CardBalance}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Background="#FF4EFF00" Name="addCardBtn" Content="Добавить" FontSize="10" Margin="5,5,10,5"/>
-                            <Button Background="#FF4EFF00" Name="topUpCardBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5"/>
-                            <Button Background="#FF4EFF00" Name="transferMoneyBtn" Content="Перевести на вклад" FontSize="10" Margin="5,5,5,5"/>
-                        </StackPanel>
+                    <ListBox Background="BlueViolet" x:Name="cardList" ItemsSource="{Binding}" SelectionChanged="cardList_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock FontSize="12" Foreground="White" Text="{Binding CardName}"/>
+                                    <TextBlock FontSize="14" Foreground="White" Text="{Binding CardBalance}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
             </Expander>
+            <StackPanel Background="#FF340063" Orientation="Horizontal">
+                <Button Background="#FF4EFF00" Name="addCardBtn" Content="Добавить" FontSize="10" Margin="5,5,10,5" Click="addCardBtn_Click"/>
+                <Button Background="#FF4EFF00" Name="topUpCardBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5" Click="topUpCardBtn_Click"/>
+                <Button Background="#FF4EFF00" Name="deleteCardBtn" Content="Удалить" FontSize="10" Margin="5,5,5,5"/>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="2">
             <Expander Header="Вклады" IsExpanded="True">
                 <StackPanel>
-                    <ListBox Background="BlueViolet" Name="depositList">
-                        <TextBlock FontSize="12" Foreground="White" Text="{Binding DepositName}"/>
-                        <TextBlock FontSize="14" Foreground="White" Text="{Binding DepositBalance}"/>
-                        <TextBlock FontSize="12" Foreground="White" Text="{Binding DepositPercent}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Background="#FF4EFF00" Name="openDepositBtn" Content="Открыть" FontSize="10" Margin="5,5,10,5"/>
-                            <Button Background="#FF4EFF00" Name="addDepositBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5"/>
-                            <Button Background="#FF4EFF00" Name="transferDepositBtn" Content="Перевести на карту" FontSize="10" Margin="5"/>
-                        </StackPanel>
+                    <ListBox Background="BlueViolet" x:Name="depositList" ItemsSource="{Binding}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock FontSize="12" Foreground="White" Text="{Binding DepositName}"/>
+                                    <TextBlock FontSize="14" Foreground="White" Text="{Binding DepositBalance}"/>
+                                    <TextBlock FontSize="12" Foreground="White" Text="{Binding DepositPercent}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
             </Expander>
+            <StackPanel Background="#FF340063" Orientation="Horizontal">
+                <Button Background="#FF4EFF00" Name="openDepositBtn" Content="Открыть" FontSize="10" Margin="5,5,10,5"/>
+                <Button Background="#FF4EFF00" Name="addDepositBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5"/>
+                <Button Background="#FF4EFF00" Name="transferDepositBtn" Content="Удалить" FontSize="10" Margin="5"/>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="3">
             <Expander Header="Курс валют" IsExpanded="True">
                 <StackPanel>
-                    <ListBox Background="BlueViolet" x:Name="exchangeRateList" ItemsSource="{Binding}">
+                    <ListBox Background="BlueViolet" x:Name="rateList" ItemsSource="{Binding}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -74,13 +86,20 @@
         </StackPanel>
 
         <StackPanel Grid.Row="4">
-            <ListBox Background="#FF340063">
+            <ListBox x:Name="history" ItemsSource="{Binding}" Background="#FF340063">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock FontSize="10" Text="{Binding History}"/>
+                        <StackPanel>
+                            <TextBlock FontSize="10" Text="{Binding Operation}"/>
+                            <TextBlock FontSize="10" Text="{Binding CreateAt}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
+
+            <TextBox x:Name="value1"/>
+            <TextBox x:Name="value2"/>
+            <TextBox x:Name="value3"/>
+        </StackPanel>            
     </Grid>
 </Window>

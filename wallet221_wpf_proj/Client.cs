@@ -12,4 +12,10 @@ public partial class Client
     public string SurName { get; set; } = null!;
 
     public long PhoneNumber { get; set; }
+
+    public virtual ICollection<History> Histories { get; set; } = new List<History>();
+
+    public virtual ICollection<RublesCard> RublesCards { get; set; } = new List<RublesCard>();
+
+    public virtual ICollection<RublesDeposit> RublesDeposits { get; set; } = new List<RublesDeposit>();
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "wallet221_wpf_proj": {
+      "commandName": "Project",
+      "hotReloadEnabled": true
+    }
+  }
+}
