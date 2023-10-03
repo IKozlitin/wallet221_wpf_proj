@@ -41,26 +41,7 @@ namespace wallet221_wpf_proj
 
         private void addCardBtn_Click(object sender, RoutedEventArgs e)
         {
-            //WindowTopUp topup = new WindowTopUp();
-            //topup.ShowDialog();
-            //if (topup.ShowDialog() == true)
-            //{
-            //    string str = topup.topupTextBox.Text;
-            //    if (str.All(char.IsDigit))
-            //    {
-            //        RublesCard rublesCard = new RublesCard
-            //        {   
-            //            ClientId = 1,
-            //            CardName = topup.nameTextBox.Text,
-            //            CardBalance = Convert.ToDecimal(topup.topupTextBox.Text)
-            //        };
-
-            //        db.RublesCards.Add(rublesCard);
-            //        db.SaveChanges();
-            //        cardList.Items.Refresh();
-            //    }
-            //    else MessageBox.Show("Неверные данные");
-            //}
+            
         }
 
         private void topUpCardBtn_Click(object sender, RoutedEventArgs e)
@@ -75,7 +56,9 @@ namespace wallet221_wpf_proj
             rublesCard = db.RublesCards.Find(rublesCard.Id);
             db.SaveChanges();
             cardList.Items.Refresh();
+            history.Items.Refresh();
         }
+
         private void cardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
