@@ -46,7 +46,51 @@ namespace wallet221_wpf_proj
 
         private void addCardBtn_Click(object sender, RoutedEventArgs e)
         {
+            WindowAddCard addcard = new WindowAddCard();
+            addcard.ShowDialog();
 
+            RublesCard rublesCard = new RublesCard()
+            {
+                ClientId = 1,
+                CardName = addcard.addcardTextBox.Text,
+                CardBalance = 0
+            };
+
+            db.RublesCards.Add(rublesCard);
+            db.SaveChanges();
+            cardList.Items.Refresh();
+
+            History newHistory = new History()
+            {
+                ClientId = 1,
+                Operation = $"Новая карта: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
+                CreateAt = DateTime.Now
+            };
+
+            db.Histories.Add(newHistory);
+            db.SaveChanges();
+            historyList.Items.Refresh();
+        }
+
+        private void deleteCardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
+            if (rublesCard is null) return;
+
+            db.RublesCards.Remove(rublesCard);
+            db.SaveChanges();
+            cardList.Items.Refresh();
+
+            History newHistory = new History()
+            {
+                ClientId = 1,
+                Operation = $"Карта: {rublesCard.CardName} удалена",
+                CreateAt = DateTime.Now
+            };
+
+            db.Histories.Add(newHistory);
+            db.SaveChanges();
+            historyList.Items.Refresh();
         }
 
         private void topUpCardBtn_Click(object sender, RoutedEventArgs e)
@@ -63,20 +107,21 @@ namespace wallet221_wpf_proj
             cardList.Items.Refresh();
 
             History newHistory = new History()
-            {   
+            {
                 ClientId = 1,
-                Operation = $"Пополнение карты - {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
+                Operation = $"Пополнение карты: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
                 CreateAt = DateTime.Now
             };
-                        
-            db.Histories.Add(newHistory);            
-            db.SaveChanges();            
-            historyList.Items.Refresh();                       
+
+            db.Histories.Add(newHistory);
+            db.SaveChanges();
+            historyList.Items.Refresh();
         }
 
         private void cardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
+
     }
 }

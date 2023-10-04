@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wallet221_wpf_proj"
         mc:Ignorable="d"
-        Title="Wallet221" Height="480" Width="300">
+        Title="Wallet221" Height="500" Width="300">
     <Grid Background="DimGray">        
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -41,7 +41,7 @@
             <StackPanel Background="#FF340063" Orientation="Horizontal">
                 <Button Background="#FF4EFF00" Name="addCardBtn" Content="Добавить" FontSize="10" Margin="5,5,10,5" Click="addCardBtn_Click"/>
                 <Button Background="#FF4EFF00" Name="topUpCardBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5" Click="topUpCardBtn_Click"/>
-                <Button Background="#FF4EFF00" Name="deleteCardBtn" Content="Удалить" FontSize="10" Margin="5,5,5,5"/>
+                <Button Background="#FF4EFF00" Name="deleteCardBtn" Content="Удалить" FontSize="10" Margin="5,5,5,5" Click="deleteCardBtn_Click"/>
             </StackPanel>
         </StackPanel>
 
@@ -85,7 +85,7 @@
             </Expander>
         </StackPanel>
 
-        <StackPanel Grid.Row="4">
+        <StackPanel Grid.Row="4" AllowDrop="True">
             <ListBox x:Name="historyList" MaxHeight="100" Foreground="White" ItemsSource="{Binding}" Background="#FF340063">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
