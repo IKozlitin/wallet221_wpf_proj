@@ -52,11 +52,3 @@ create table History
 	CreateAt datetime not null default getdate()
 )
 go
-create trigger RublesCard_Insert
-on RublesCard
-after update 
-as
-insert into History(ClientId, Operation)
-select Id, 'Изменение баланса на карте ' + CardBalance
-from inserted
-go

@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,15 +40,17 @@ namespace wallet221_wpf_proj
             depositList.DataContext = db.RublesDeposits.Local.ToObservableCollection();
             db.RateLists.Load();
             rateList.DataContext = db.RateLists.Local.ToObservableCollection();
+            db.Histories.Load();
+            historyList.DataContext = db.Histories.Local.ToObservableCollection();
         }
 
         private void addCardBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void topUpCardBtn_Click(object sender, RoutedEventArgs e)
-        {          
+        {
             WindowTopUp topup = new WindowTopUp();
             topup.ShowDialog();
 
@@ -56,13 +61,22 @@ namespace wallet221_wpf_proj
             rublesCard = db.RublesCards.Find(rublesCard.Id);
             db.SaveChanges();
             cardList.Items.Refresh();
-            history.Items.Refresh();
+
+            History newHistory = new History()
+            {   
+                ClientId = 1,
+                Operation = $"Пополнение карты - {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
+                CreateAt = DateTime.Now
+            };
+                        
+            db.Histories.Add(newHistory);            
+            db.SaveChanges();            
+            historyList.Items.Refresh();                       
         }
 
         private void cardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
-            if (rublesCard is null) return;
+            
         }
     }
 }

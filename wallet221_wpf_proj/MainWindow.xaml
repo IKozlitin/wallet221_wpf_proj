@@ -86,7 +86,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="4">
-            <ListBox x:Name="history" ItemsSource="{Binding}" Background="#FF340063">
+            <ListBox x:Name="historyList" MaxHeight="100" Foreground="White" ItemsSource="{Binding}" Background="#FF340063">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
