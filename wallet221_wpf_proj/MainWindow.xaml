@@ -17,12 +17,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        <!--Панель клиента-->
         <StackPanel Name="client" Background="#FF340063" Grid.Row="0">
             <TextBlock FontSize="15" Foreground="White" FontWeight="Bold" Text="{Binding SurName}"/>
             <TextBlock FontSize="15" Foreground="White" FontWeight="Bold" Text="{Binding FirstName}"/>
         </StackPanel>
-
+        <!--Список карт-->
         <StackPanel Grid.Row="1">
             <Expander Header="Карты" IsExpanded="True">
                 <StackPanel>
@@ -38,13 +38,14 @@
                     </ListBox>
                 </StackPanel>
             </Expander>
+            
             <StackPanel Background="#FF340063" Orientation="Horizontal">
                 <Button Background="#FF4EFF00" Name="addCardBtn" Content="Добавить" FontSize="10" Margin="5,5,10,5" Click="addCardBtn_Click"/>
                 <Button Background="#FF4EFF00" Name="topUpCardBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5" Click="topUpCardBtn_Click"/>
                 <Button Background="#FF4EFF00" Name="deleteCardBtn" Content="Удалить" FontSize="10" Margin="5,5,5,5" Click="deleteCardBtn_Click"/>
             </StackPanel>
         </StackPanel>
-
+        <!--Список вкладов-->
         <StackPanel Grid.Row="2">
             <Expander Header="Вклады" IsExpanded="True">
                 <StackPanel>
@@ -67,7 +68,7 @@
                 <Button Background="#FF4EFF00" Name="transferDepositBtn" Content="Удалить" FontSize="10" Margin="5"/>
             </StackPanel>
         </StackPanel>
-
+        <!--Список курса валют-->
         <StackPanel Grid.Row="3">
             <Expander Header="Курс валют" IsExpanded="True">
                 <StackPanel>
@@ -84,7 +85,7 @@
                 </StackPanel>
             </Expander>
         </StackPanel>
-
+        <!--Список истории-->
         <StackPanel Grid.Row="4" AllowDrop="True">
             <ListBox x:Name="historyList" MaxHeight="100" Foreground="White" ItemsSource="{Binding}" Background="#FF340063">
                 <ListBox.ItemTemplate>

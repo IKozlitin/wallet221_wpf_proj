@@ -24,12 +24,24 @@ namespace wallet221_wpf_proj
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Создание нового контекста для БД
+        /// </summary>
         WalletDbContext db = new WalletDbContext();
+        /// <summary>
+        /// Главное окно
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
         }
+
+        /// <summary>
+        /// Метод загрузки таблиц в Главное окно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             db.Clients.Load();
@@ -44,6 +56,11 @@ namespace wallet221_wpf_proj
             historyList.DataContext = db.Histories.Local.ToObservableCollection();
         }
 
+        /// <summary>
+        /// Метод добавления новой карты и запись операции в таблицу История
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addCardBtn_Click(object sender, RoutedEventArgs e)
         {
             WindowAddCard addcard = new WindowAddCard();
@@ -72,6 +89,11 @@ namespace wallet221_wpf_proj
             historyList.Items.Refresh();
         }
 
+        /// <summary>
+        /// Метод удаления карты и запись операции в таблицу История
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteCardBtn_Click(object sender, RoutedEventArgs e)
         {
             RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
@@ -84,7 +106,7 @@ namespace wallet221_wpf_proj
             History newHistory = new History()
             {
                 ClientId = 1,
-                Operation = $"Карта: {rublesCard.CardName} удалена",
+                Operation = $"Карта: {rublesCard.CardName} - удалена",
                 CreateAt = DateTime.Now
             };
 
@@ -93,6 +115,11 @@ namespace wallet221_wpf_proj
             historyList.Items.Refresh();
         }
 
+        /// <summary>
+        /// Метод пополнения карты и запись операции в таблицу История
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void topUpCardBtn_Click(object sender, RoutedEventArgs e)
         {
             WindowTopUp topup = new WindowTopUp();
@@ -117,7 +144,12 @@ namespace wallet221_wpf_proj
             db.SaveChanges();
             historyList.Items.Refresh();
         }
-
+        
+        /// <summary>
+        /// Метод выбора карты из списка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
