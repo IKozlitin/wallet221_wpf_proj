@@ -1,21 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace wallet221_wpf_proj
 {
@@ -25,7 +12,7 @@ namespace wallet221_wpf_proj
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// Создание нового контекста для БД
+        /// Создание контекста для БД
         /// </summary>
         WalletDbContext db = new WalletDbContext();
         /// <summary>
@@ -53,11 +40,11 @@ namespace wallet221_wpf_proj
             db.RateLists.Load();
             rateList.DataContext = db.RateLists.Local.ToObservableCollection();
             db.Histories.Load();
-            historyList.DataContext = db.Histories.Local.ToObservableCollection();
+            historyList.DataContext = db.Histories.Local.ToObservableCollection();            
         }
 
         /// <summary>
-        /// Метод добавления новой карты и запись операции в таблицу История
+        /// Метод для кнопки добавления новой карты и запись операции в таблицу История
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -90,7 +77,7 @@ namespace wallet221_wpf_proj
         }
 
         /// <summary>
-        /// Метод удаления карты и запись операции в таблицу История
+        /// Метод для кнопки удаления карты и запись операции в таблицу История
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -116,12 +103,12 @@ namespace wallet221_wpf_proj
         }
 
         /// <summary>
-        /// Метод пополнения карты и запись операции в таблицу История
+        /// Метод для кнопки пополнения карты и запись операции в таблицу История
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void topUpCardBtn_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             WindowTopUp topup = new WindowTopUp();
             topup.ShowDialog();
 
@@ -141,10 +128,10 @@ namespace wallet221_wpf_proj
             };
 
             db.Histories.Add(newHistory);
-            db.SaveChanges();
-            historyList.Items.Refresh();
+            db.SaveChanges();           
+            historyList.Items.Refresh();            
         }
-        
+
         /// <summary>
         /// Метод выбора карты из списка
         /// </summary>
@@ -155,5 +142,31 @@ namespace wallet221_wpf_proj
 
         }
 
+        /// <summary>
+        /// Метод расчета прибыли по вкладу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void profitOfDepositBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RublesDeposit? rublesDeposit = depositList.SelectedItem as RublesDeposit;
+            if (rublesDeposit is null) return;
+            float profit;
+            float balance = Convert.ToSingle(rublesDeposit.DepositBalance);
+            float percent = Convert.ToSingle(rublesDeposit.DepositPercent);
+            profit = balance / 100 * percent;
+            MessageBoxResult result = MessageBox.Show($"Прибыль по вкладу составит: {profit} рублей");
+        }
+
+        /// <summary>
+        /// Метод выбора депозита из списка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void depositList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+               
     }
 }

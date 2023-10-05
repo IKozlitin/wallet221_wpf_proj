@@ -49,7 +49,7 @@
         <StackPanel Grid.Row="2">
             <Expander Header="Вклады" IsExpanded="True">
                 <StackPanel>
-                    <ListBox Background="BlueViolet" x:Name="depositList" ItemsSource="{Binding}">
+                    <ListBox Background="BlueViolet" x:Name="depositList" ItemsSource="{Binding}" SelectionChanged="depositList_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -64,8 +64,8 @@
             </Expander>
             <StackPanel Background="#FF340063" Orientation="Horizontal">
                 <Button Background="#FF4EFF00" Name="openDepositBtn" Content="Открыть" FontSize="10" Margin="5,5,10,5"/>
-                <Button Background="#FF4EFF00" Name="addDepositBtn" Content="Пополнить" FontSize="10" Margin="5,5,10,5"/>
-                <Button Background="#FF4EFF00" Name="transferDepositBtn" Content="Удалить" FontSize="10" Margin="5"/>
+                <Button Background="#FF4EFF00" Name="profitOfDepositBtn" Content="Прибыль по вкладу" FontSize="10" Margin="5,5,10,5" Click="profitOfDepositBtn_Click"/>
+                <Button Background="#FF4EFF00" Name="closeDepositBtn" Content="Закрыть" FontSize="10" Margin="5"/>
             </StackPanel>
         </StackPanel>
         <!--Список курса валют-->
@@ -86,8 +86,8 @@
             </Expander>
         </StackPanel>
         <!--Список истории-->
-        <StackPanel Grid.Row="4" AllowDrop="True">
-            <ListBox x:Name="historyList" MaxHeight="100" Foreground="White" ItemsSource="{Binding}" Background="#FF340063">
+        <StackPanel Grid.Row="4">
+            <ListBox x:Name="historyList" Height="100" Foreground="White" ItemsSource="{Binding}" Background="#FF340063">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
