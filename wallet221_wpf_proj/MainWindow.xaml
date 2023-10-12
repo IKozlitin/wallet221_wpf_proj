@@ -63,9 +63,9 @@
                 </StackPanel>
             </Expander>
             <StackPanel Background="#FF340063" Orientation="Horizontal">
-                <Button Background="#FF4EFF00" Name="openDepositBtn" Content="Открыть" FontSize="10" Margin="5,5,10,5"/>
-                <Button Background="#FF4EFF00" Name="profitOfDepositBtn" Content="Прибыль по вкладу" FontSize="10" Margin="5,5,10,5" Click="profitOfDepositBtn_Click"/>
-                <Button Background="#FF4EFF00" Name="closeDepositBtn" Content="Закрыть" FontSize="10" Margin="5"/>
+                <Button Background="#FF4EFF00" Name="profitOfDepositBtn" Content="Прибыль" FontSize="10" Margin="5,5,10,5" Click="profitOfDepositBtn_Click"/>
+                <Button Background="#FF4EFF00" Name="transferDepositBtn" Content="Перевод" FontSize="10" Margin="5,5,10,5" Click="transferDepositBtn_Click"/>
+                <Button Background="#FF4EFF00" Name="withdrawalDepositBtn" Content="Снятие" FontSize="10" Margin="5" Click="withdrawalDepositBtn_Click"/>
             </StackPanel>
         </StackPanel>
         <!--Список курса валют-->
