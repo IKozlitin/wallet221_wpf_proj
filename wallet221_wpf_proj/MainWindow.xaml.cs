@@ -41,7 +41,7 @@ namespace wallet221_wpf_proj
             db.RateLists.Load();
             rateList.DataContext = db.RateLists.Local.ToObservableCollection();
             db.Histories.Load();
-            historyList.DataContext = db.Histories.Local.ToObservableCollection().OrderByDescending(h=>h.Id);            
+            historyList.DataContext = db.Histories.Local.ToObservableCollection().OrderByDescending(h => h.Id);
         }
 
         /// <summary>
@@ -51,30 +51,38 @@ namespace wallet221_wpf_proj
         /// <param name="e"></param>
         private void addCardBtn_Click(object sender, RoutedEventArgs e)
         {
-            WindowAddCard addcard = new WindowAddCard();
-            addcard.ShowDialog();
-
-            RublesCard rublesCard = new RublesCard()
+            try
             {
-                ClientId = 1,
-                CardName = addcard.addcardTextBox.Text,
-                CardBalance = 0
-            };
+                WindowAddCard addcard = new WindowAddCard();
+                addcard.ShowDialog();
+                
+                RublesCard rublesCard = new RublesCard()
+                {
+                    ClientId = 1,
+                    CardName = addcard.addcardTextBox.Text,
+                    CardBalance = 0
+                };
+                
+                db.RublesCards.Add(rublesCard);
+                db.SaveChanges();
+                cardList.Items.Refresh();
 
-            db.RublesCards.Add(rublesCard);
-            db.SaveChanges();
-            cardList.Items.Refresh();
+                History newHistory = new History()
+                {
+                    ClientId = 1,
+                    Operation = $"Новая карта: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
+                    CreateAt = DateTime.Now
+                };
 
-            History newHistory = new History()
+                db.Histories.Add(newHistory);
+                db.SaveChanges();
+                historyList.Items.Refresh();
+            }
+            catch (Exception ex)
             {
-                ClientId = 1,
-                Operation = $"Новая карта: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
-                CreateAt = DateTime.Now
-            };
+                MessageBox.Show(ex.Message);
+            }
 
-            db.Histories.Add(newHistory);
-            db.SaveChanges();
-            historyList.Items.Refresh();
         }
 
         /// <summary>
@@ -84,23 +92,30 @@ namespace wallet221_wpf_proj
         /// <param name="e"></param>
         private void deleteCardBtn_Click(object sender, RoutedEventArgs e)
         {
-            RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
-            if (rublesCard is null) return;
-
-            db.RublesCards.Remove(rublesCard);
-            db.SaveChanges();
-            cardList.Items.Refresh();
-
-            History newHistory = new History()
+            try
             {
-                ClientId = 1,
-                Operation = $"Карта: {rublesCard.CardName} - удалена",
-                CreateAt = DateTime.Now
-            };
+                RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
+                if (rublesCard is null) return;
 
-            db.Histories.Add(newHistory);
-            db.SaveChanges();
-            historyList.Items.Refresh();
+                db.RublesCards.Remove(rublesCard);
+                db.SaveChanges();
+                cardList.Items.Refresh();
+
+                History newHistory = new History()
+                {
+                    ClientId = 1,
+                    Operation = $"Карта: {rublesCard.CardName} - удалена",
+                    CreateAt = DateTime.Now
+                };
+
+                db.Histories.Add(newHistory);
+                db.SaveChanges();
+                historyList.Items.Refresh();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>
@@ -109,28 +124,36 @@ namespace wallet221_wpf_proj
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void topUpCardBtn_Click(object sender, RoutedEventArgs e)
-        {            
-            WindowTopUp topup = new WindowTopUp();
-            topup.ShowDialog();
-
-            RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
-            if (rublesCard is null) return;
-            rublesCard.CardBalance += Convert.ToDecimal(topup.topupTextBox.Text);
-
-            rublesCard = db.RublesCards.Find(rublesCard.Id);
-            db.SaveChanges();
-            cardList.Items.Refresh();
-            
-            History newHistory = new History()
+        {
+            try
             {
-                ClientId = 1,
-                Operation = $"Пополнение карты: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
-                CreateAt = DateTime.Now
-            };
+                WindowTopUp topup = new WindowTopUp();
+                topup.ShowDialog();
 
-            db.Histories.Add(newHistory);
-            db.SaveChanges();           
-            historyList.Items.Refresh();            
+                RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
+                if (rublesCard is null) return;
+                rublesCard.CardBalance += Convert.ToDecimal(topup.topupTextBox.Text);
+
+                rublesCard = db.RublesCards.Find(rublesCard.Id);
+                db.SaveChanges();
+                cardList.Items.Refresh();
+
+                History newHistory = new History()
+                {
+                    ClientId = 1,
+                    Operation = $"Пополнение карты: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}",
+                    CreateAt = DateTime.Now
+                };
+
+                db.Histories.Add(newHistory);
+                db.SaveChanges();
+                historyList.Items.Refresh();
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         /// <summary>
@@ -150,13 +173,21 @@ namespace wallet221_wpf_proj
         /// <param name="e"></param>
         private void profitOfDepositBtn_Click(object sender, RoutedEventArgs e)
         {
-            RublesDeposit? rublesDeposit = depositList.SelectedItem as RublesDeposit;
-            if (rublesDeposit is null) return;
-            float profit;
-            float balance = Convert.ToSingle(rublesDeposit.DepositBalance);
-            float percent = Convert.ToSingle(rublesDeposit.DepositPercent);
-            profit = balance / 100 * percent;
-            MessageBoxResult result = MessageBox.Show($"Прибыль по вкладу за один год составит: {profit} рублей");
+            try
+            {
+                RublesDeposit? rublesDeposit = depositList.SelectedItem as RublesDeposit;
+                if (rublesDeposit is null) return;
+                float profit;
+                float balance = Convert.ToSingle(rublesDeposit.DepositBalance);
+                float percent = Convert.ToSingle(rublesDeposit.DepositPercent);
+                profit = balance / 100 * percent;
+                MessageBoxResult result = MessageBox.Show($"Прибыль по вкладу за один год составит: {profit} рублей");
+            }
+            catch ( Exception ex ) 
+            { 
+                MessageBox.Show(ex.Message);
+            }
+           
         }
 
         /// <summary>
@@ -168,7 +199,7 @@ namespace wallet221_wpf_proj
         {
 
         }
-       
+
         /// <summary>
         /// Метод перевода денег с выбранной карты на депозит и запись операции в историю
         /// </summary>
@@ -176,35 +207,42 @@ namespace wallet221_wpf_proj
         /// <param name="e"></param>
         private void transferDepositBtn_Click(object sender, RoutedEventArgs e)
         {
-            WindowTransferMoney transferMoney = new WindowTransferMoney();
-            transferMoney.ShowDialog();
-
-            RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
-            if (rublesCard is null) return;
-            rublesCard.CardBalance -= Convert.ToDecimal(transferMoney.transferTextBox.Text);
-            
-            rublesCard = db.RublesCards.Find(rublesCard.Id);
-            db.SaveChanges();
-            cardList.Items.Refresh();
-
-            RublesDeposit? rublesDeposit = depositList.SelectedItem as RublesDeposit;
-            if (rublesDeposit is null) return;
-            rublesDeposit.DepositBalance += Convert.ToDecimal(transferMoney.transferTextBox.Text);          
-
-            rublesDeposit = db.RublesDeposits.Find(rublesDeposit.Id);
-            db.SaveChanges();
-            cardList.Items.Refresh();
-
-            History newHistory = new History()
+            try
             {
-                ClientId = 1,
-                Operation = $"Перевод с карты: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}\nна вклад: {rublesDeposit?.DepositName} || Баланс: {rublesDeposit?.DepositBalance}",
-                CreateAt = DateTime.Now
-            };
+                WindowTransferMoney transferMoney = new WindowTransferMoney();
+                transferMoney.ShowDialog();
 
-            db.Histories.Add(newHistory);
-            db.SaveChanges();
-            historyList.Items.Refresh();
+                RublesCard? rublesCard = cardList.SelectedItem as RublesCard;
+                if (rublesCard is null) return;
+                rublesCard.CardBalance -= Convert.ToDecimal(transferMoney.transferTextBox.Text);
+
+                rublesCard = db.RublesCards.Find(rublesCard.Id);
+                db.SaveChanges();
+                cardList.Items.Refresh();
+
+                RublesDeposit? rublesDeposit = depositList.SelectedItem as RublesDeposit;
+                if (rublesDeposit is null) return;
+                rublesDeposit.DepositBalance += Convert.ToDecimal(transferMoney.transferTextBox.Text);
+
+                rublesDeposit = db.RublesDeposits.Find(rublesDeposit.Id);
+                db.SaveChanges();
+                cardList.Items.Refresh();
+
+                History newHistory = new History()
+                {
+                    ClientId = 1,
+                    Operation = $"Перевод с карты: {rublesCard?.CardName} || Баланс: {rublesCard?.CardBalance}\nна вклад: {rublesDeposit?.DepositName} || Баланс: {rublesDeposit?.DepositBalance}",
+                    CreateAt = DateTime.Now
+                };
+
+                db.Histories.Add(newHistory);
+                db.SaveChanges();
+                historyList.Items.Refresh();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }            
         }
 
         /// <summary>
@@ -214,27 +252,34 @@ namespace wallet221_wpf_proj
         /// <param name="e"></param>
         private void withdrawalDepositBtn_Click(object sender, RoutedEventArgs e)
         {
-            WindowWithdrawal withdrawal = new WindowWithdrawal();
-            withdrawal.ShowDialog();
-
-            RublesDeposit? rublesDeposit = depositList.SelectedItem as RublesDeposit;
-            if (rublesDeposit is null) return;
-            rublesDeposit.DepositBalance -= Convert.ToDecimal(withdrawal.withdrawalTextBox.Text);
-
-            rublesDeposit = db.RublesDeposits.Find(rublesDeposit.Id);
-            db.SaveChanges();
-            cardList.Items.Refresh();
-
-            History newHistory = new History()
+            try
             {
-                ClientId = 1,
-                Operation = $"Снятие денег с депозита || Баланс: {rublesDeposit?.DepositBalance}",
-                CreateAt = DateTime.Now
-            };
+                WindowWithdrawal withdrawal = new WindowWithdrawal();
+                withdrawal.ShowDialog();
 
-            db.Histories.Add(newHistory);
-            db.SaveChanges();
-            historyList.Items.Refresh();
+                RublesDeposit? rublesDeposit = depositList.SelectedItem as RublesDeposit;
+                if (rublesDeposit is null) return;
+                rublesDeposit.DepositBalance -= Convert.ToDecimal(withdrawal.withdrawalTextBox.Text);
+
+                rublesDeposit = db.RublesDeposits.Find(rublesDeposit.Id);
+                db.SaveChanges();
+                cardList.Items.Refresh();
+
+                History newHistory = new History()
+                {
+                    ClientId = 1,
+                    Operation = $"Снятие денег с депозита || Баланс: {rublesDeposit?.DepositBalance}",
+                    CreateAt = DateTime.Now
+                };
+
+                db.Histories.Add(newHistory);
+                db.SaveChanges();
+                historyList.Items.Refresh();
+            }
+            catch (Exception ex) 
+            { 
+                MessageBox.Show(ex.Message);  
+            }    
         }
     }
 }
